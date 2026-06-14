@@ -1,0 +1,40 @@
+# Claude Code 설정 및 개인 참고 파일 (제출 제외)
+CLAUDE.md
+PRESENTATION.md
+
+# 발표·논문용 생성 스크립트 (로컬 전용)
+scripts/07_qualitative.py
+scripts/08_paper_figures.py
+scripts/_*.py
+outputs/figures/fig_system_overview.png
+outputs/figures/fig_tiling_pipeline.png
+outputs/figures/fig_qualitative.png
+
+# 체크포인트 / 중간 결과 (용량 큼)
+outputs/ckpt_*.jsonl
+outputs/tune_cache_*.json
+
+# YOLO 학습 결과 (재현 가능)
+runs/
+
+# 모델 가중치 (용량 큼, 재다운로드 가능)
+*.pt
+
+# 스모크 테스트 임시 출력
+outputs/check.jpg
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# 임시 헬퍼 스크립트
+scripts/_find_candidate.py
+
+# 환경 / 에디터
+.env
+.vscode/settings.json
+*.egg-info/
+dist/
+build/

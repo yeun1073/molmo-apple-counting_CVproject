@@ -1,0 +1,29 @@
+# 실험 설정. 스크립트들이 이 파일을 읽어 동작.
+
+model:
+  model_id: "allenai/Molmo-7B-D-0924"
+  generation: 1            # 1세대(0~100) / 2세대(1000). 모델 바꾸면 함께 변경
+
+prompt:
+  key: "P1_basic"          # prompts.py 의 키
+
+tiling:
+  enabled: true
+  tile_size: 512
+  overlap: 64
+  merge_radius: 30.0
+
+sam:
+  enabled: false           # 선택 ablation
+  min_area_ratio: 0.0001
+  max_area_ratio: 0.02
+
+dataset:
+  name: "minneapple"
+  root_dir: "C:/datasets/MinneApple"
+  val_ids_file: "configs/val_ids.txt"   # 튜닝 전용 split (test 누수 방지)
+
+eval:
+  loc_dist_thresh: 20.0    # 위치 매칭 임계 픽셀거리
+
+output_dir: "outputs"

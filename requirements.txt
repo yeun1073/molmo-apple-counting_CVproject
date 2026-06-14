@@ -1,0 +1,18 @@
+# 1세대 Molmo 기준. 2세대(Molmo2)는 모델 카드의 버전 지침을 따를 것.
+torch
+torchvision
+transformers
+accelerate
+einops
+pillow
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+opencv-python
+pyyaml
+# baseline용
+ultralytics
+# 선택(SAM 필터)
+# segment-anything 또는 sam2
