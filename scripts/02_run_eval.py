@@ -87,6 +87,7 @@ def main():
     ap.add_argument("--limit", type=int, default=None, help="처리할 이미지 수 상한 (디버그용)")
     ap.add_argument("--sample", type=int, default=None, help="층화 샘플 수 (예: 50). None이면 전체")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--load_mode", default="4bit", choices=["4bit", "bf16", "auto"])
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.config, encoding="utf-8"))
@@ -119,7 +120,8 @@ def main():
     todo = [s for s in prefilled if os.path.basename(s.image_path) not in done_names]
     print(f"[eval] {args.method} | split={args.split} | 전체={len(prefilled)}장 | 남은={len(todo)}장")
 
-    model = MolmoPointer(cfg["model"]["model_id"], cfg["model"]["generation"]).load()
+    model = MolmoPointer(cfg["model"]["model_id"], cfg["model"]["generation"],
+                         load_mode=args.load_mode).load()
     prompt = PROMPTS[prompt_key]
     point_fn = build_point_fn(model, prompt, cfg, args.method)
 

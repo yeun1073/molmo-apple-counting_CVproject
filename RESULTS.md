@@ -7,7 +7,7 @@
 | Model | allenai/Molmo-7B-D-0924 (4-bit quantization) |
 | GPU | NVIDIA RTX 3060 12GB |
 | Dataset | MinneApple (detection split) |
-| Test set | 50 images, stratified by occlusion level, seed=42 |
+| Test set | 331 images (full MinneApple test split) |
 | Prompt (P1) | "Point to all the apples in the image." |
 | Tile size | 512px, overlap 64px |
 | Merge radius | 30px (tuned on val split) |
@@ -17,18 +17,18 @@
 
 | Method | Low MAE | Low RMSE | Mid MAE | Mid RMSE | **High MAE** | **High RMSE** | All MAE | All RMSE |
 |---|---|---|---|---|---|---|---|---|
-| Molmo Raw (zero-shot) | 12.18 | 14.86 | 11.38 | 13.84 | 37.33 | 37.67 | 17.88 | 22.28 |
-| **Molmo Tiled (zero-shot)** | 22.94 | 27.84 | 26.19 | 31.51 | **13.08** | **16.60** | 21.94 | 27.32 |
-| YOLOv8n (fine-tuned) | **2.94** | **3.51** | **5.48** | **7.64** | 20.75 | 22.27 | **8.28** | **12.16** |
+| Molmo Raw (zero-shot) | 17.42 | 24.47 | 14.59 | 19.97 | 37.33 | 37.67 | 16.31 | 22.35 |
+| **Molmo Tiled (zero-shot)** | 28.98 | 34.01 | 25.57 | 30.52 | **13.08** | **16.60** | 26.20 | 31.29 |
+| YOLOv8n (fine-tuned) | **3.70** | **5.03** | **7.49** | **9.55** | 20.75 | 22.27 | **6.77** | **9.22** |
 
-n(low)=17, n(mid)=21, n(high)=12
+n(low)=105, n(mid)=214, n(high)=12
 
 ## Localization F1
 
 | Method | F1 (mean) |
 |---|---|
-| Molmo Raw | 0.271 |
-| Molmo Tiled | **0.409** |
+| Molmo Raw | 0.260 |
+| Molmo Tiled | **0.406** |
 
 *dist_thresh = 20px*
 

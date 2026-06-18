@@ -1,19 +1,19 @@
 {
   "method": "yolo",
-  "weights": "C:\\Users\\C\\OneDrive\\바탕 화면\\minYeeun\\molmo_apple\\runs\\detect\\outputs\\yolo_train\\minneapple\\weights\\best.pt",
+  "weights": "runs/detect/outputs/yolo_train/minneapple/weights/best.pt",
   "split": "test",
-  "n_images": 50,
+  "n_images": 331,
   "conf": 0.25,
   "counting": {
     "low": {
-      "MAE": 2.9411764705882355,
-      "RMSE": 3.5146751167740367,
-      "n": 17
+      "MAE": 3.6952380952380954,
+      "RMSE": 5.033222956847166,
+      "n": 105
     },
     "mid": {
-      "MAE": 5.476190476190476,
-      "RMSE": 7.643858412383855,
-      "n": 21
+      "MAE": 7.490654205607477,
+      "RMSE": 9.553342616078778,
+      "n": 214
     },
     "high": {
       "MAE": 20.75,
@@ -21,9 +21,9 @@
       "n": 12
     },
     "all": {
-      "MAE": 8.28,
-      "RMSE": 12.155657119218196,
-      "n": 50
+      "MAE": 6.767371601208459,
+      "RMSE": 9.220691299260256,
+      "n": 331
     }
   }
 }

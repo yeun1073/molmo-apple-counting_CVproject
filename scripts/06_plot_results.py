@@ -60,7 +60,8 @@ def plot_mae_bar(data, out_dir):
     ax.set_xticks(x)
     ax.set_xticklabels(OCC_LABELS, fontsize=11)
     ax.set_ylabel("MAE (↓ better)", fontsize=11)
-    ax.set_title("Counting MAE by Occlusion Level\n(N=50 test images, seed=42)", fontsize=12)
+    n = data["raw"]["n_images"]
+    ax.set_title(f"Counting MAE by Occlusion Level  (N={n} test images)", fontsize=12)
     ax.legend(fontsize=9, framealpha=0.8)
     ax.set_ylim(0, 45)
     ax.yaxis.grid(True, linestyle="--", alpha=0.5)
@@ -147,7 +148,8 @@ def plot_summary_table(data, out_dir):
         if i - 1 == best_high_row:
             tbl[i, 3].set_text_props(fontweight="bold")
 
-    ax.set_title("Table: Counting Performance Comparison (N=50 test images)",
+    n = data["raw"]["n_images"]
+    ax.set_title(f"Table: Counting Performance Comparison  (N={n} test images)",
                  fontsize=12, pad=20, fontweight="bold")
     out = os.path.join(out_dir, "fig_table.png")
     plt.tight_layout()
@@ -195,7 +197,8 @@ def plot_pred_distribution(out_dir):
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
 
-    fig.suptitle("Predicted vs GT Count (N=50 test images)", fontsize=12, fontweight="bold")
+    n = len(raw_r)
+    fig.suptitle(f"Predicted vs GT Count  (N={n} test images)", fontsize=12, fontweight="bold")
     out = os.path.join(out_dir, "fig_scatter.png")
     plt.tight_layout()
     plt.savefig(out, dpi=150)
