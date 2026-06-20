@@ -81,7 +81,7 @@ def load_checkpoint(ckpt_path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
-    ap.add_argument("--method", default="tiled", choices=["raw", "tiled", "tiled_sam"])
+    ap.add_argument("--method", default="tiled", choices=["raw", "tiled"])
     ap.add_argument("--split", default="test", choices=["val", "test"])
     ap.add_argument("--prompt", default=None, help="프롬프트 키 override (예: P2_occluded). 없으면 config 값 사용")
     ap.add_argument("--limit", type=int, default=None, help="처리할 이미지 수 상한 (디버그용)")
@@ -125,10 +125,6 @@ def main():
     prompt = PROMPTS[prompt_key]
     point_fn = build_point_fn(model, prompt, cfg, args.method)
 
-    sam_filter = None
-    if args.method == "tiled_sam" and cfg["sam"]["enabled"]:
-        raise NotImplementedError("SAM predictor 로드 코드 추가 필요")
-
     ckpt_f = open(ckpt_path, "a", encoding="utf-8")
     total = len(prefilled)
     done_count = len(done_names)
@@ -137,9 +133,6 @@ def main():
         done_count += 1
         image = Image.open(s.image_path)
         pts = point_fn(image)
-        if sam_filter is not None:
-            pts = sam_filter.filter(image, pts)
-
         loc = localization_prf(
             [(p.x, p.y) for p in pts], s.gt_points, cfg["eval"]["loc_dist_thresh"]
         )

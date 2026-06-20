@@ -43,8 +43,7 @@ molmo_apple/
 │   ├── tiling.py                       # ★ 타일링 + 중복 제거 (핵심 기여)
 │   ├── dataset.py                      # MinneApple 로딩 + GT 변환 + occ 등급화
 │   ├── metrics.py                      # MAE/RMSE (등급별) + 위치 P/R/F1
-│   ├── visualize.py                    # 좌표 시각화 도구
-│   └── sam_filter.py                   # SAM 거짓양성 필터 (선택 ablation)
+│   └── visualize.py                    # 좌표 시각화 도구
 ├── scripts/
 │   ├── 01_smoke_test.py                # 단일 이미지 추론 + 좌표 육안 검증
 │   ├── 02_run_eval.py                  # 전체 평가 파이프라인 (체크포인트 지원)

@@ -13,11 +13,6 @@ tiling:
   overlap: 64
   merge_radius: 30.0
 
-sam:
-  enabled: false           # 선택 ablation
-  min_area_ratio: 0.0001
-  max_area_ratio: 0.02
-
 dataset:
   name: "minneapple"
   root_dir: "C:/datasets/MinneApple"
