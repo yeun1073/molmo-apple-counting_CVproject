@@ -14,6 +14,14 @@ High-occlusion 환경에서 **zero-shot Tiled Molmo (MAE=13.08)**가
 **fine-tuned YOLOv8n (MAE=20.75)**을 능가.
 → 상세 수치: [RESULTS.md](RESULTS.md)
 
+| Method | Low MAE | Mid MAE | **High MAE** | All MAE |
+|---|---|---|---|---|
+| Molmo Raw (zero-shot) | 17.42 | 14.59 | 37.33 | 16.31 |
+| **Molmo Tiled (zero-shot)** | 28.98 | 25.57 | **13.08** | 26.20 |
+| YOLOv8n (fine-tuned) | **3.70** | **7.49** | 20.75 | **6.77** |
+
+*N=331 test images (full MinneApple test split)*
+
 ## Environment
 
 ```
@@ -49,11 +57,9 @@ molmo_apple/
 │   └── val_ids.txt                     # val split (train에서 30장 층화 샘플, seed=42)
 ├── outputs/
 │   ├── figures/                        # 생성된 그래프 (png)
-│   ├── result_raw_P1_basic_test.json   # raw baseline 결과
-│   ├── result_tiled_P1_basic_test.json # tiled 결과 (merge_radius=30)
-│   ├── result_yolo_test.json           # YOLO 결과
-│   ├── ckpt_raw_P1_basic_test.jsonl    # 이미지별 raw 체크포인트
-│   └── ckpt_tiled_P1_basic_test.jsonl  # 이미지별 tiled 체크포인트
+│   ├── result_raw_P1_basic_test.json   # raw baseline 결과 (N=331)
+│   ├── result_tiled_P1_basic_test.json # tiled 결과 (merge_radius=30, N=331)
+│   └── result_yolo_test.json           # YOLO 결과 (N=331)
 ├── RESULTS.md                          # 상세 실험 수치 및 분석
 └── README.md
 ```
@@ -66,13 +72,13 @@ conda activate molmo
 # 1. 단일 이미지 동작 확인
 python -m scripts.01_smoke_test --image apple.jpg --load_mode 4bit
 
-# 2. 전체 평가 (raw, 50장 층화 샘플)
+# 2. 전체 평가 — Raw Molmo (체크포인트 지원, 중단 후 재실행 가능)
 python -m scripts.02_run_eval --config configs/config.yaml \
-    --method raw --split test --sample 50
+    --method raw --load_mode 4bit
 
-# 3. 타일링 평가
+# 3. 전체 평가 — Tiled Molmo
 python -m scripts.02_run_eval --config configs/config.yaml \
-    --method tiled --split test --sample 50
+    --method tiled --load_mode 4bit
 
 # 4. YOLO 라벨 생성 + 학습
 python -m scripts.05_prepare_yolo --root C:/datasets/MinneApple
@@ -81,14 +87,16 @@ yolo train data=C:/datasets/MinneApple/yolo/dataset.yaml \
 
 # 5. YOLO 대조군 평가
 python -m scripts.03_yolo_baseline --config configs/config.yaml \
-    --weights runs/detect/.../best.pt --sample 50
+    --weights runs/detect/.../best.pt
 
 # 6. merge_radius 튜닝 (val split에서만)
 python -m scripts.04_tune_merge_radius --config configs/config.yaml
 
 # 7. 결과 시각화
-python -m scripts.06_plot_results --out_dir outputs/figures
+python -m scripts.06_plot_results
 ```
+
+> `--sample N` 옵션으로 층화 샘플 N장만 빠르게 테스트할 수 있다 (예: `--sample 50`).
 
 ## Dataset
 
@@ -109,11 +117,11 @@ C:\datasets\MinneApple\
 
 이미지 단위 밀도(사과 수 / 이미지 픽셀 수 × 10⁶, per megapixel) 기준:
 
-| Level | 기준 | test 내 비율 |
+| Level | 기준 | test 내 비율 (N=331) |
 |---|---|---|
-| low | density < 30 | 34% (17/50) |
-| mid | 30 ≤ density < 80 | 42% (21/50) |
-| high | density ≥ 80 | 24% (12/50) |
+| low | density < 30 | 31.7% (105장) |
+| mid | 30 ≤ density < 80 | 64.7% (214장) |
+| high | density ≥ 80 | 3.6% (12장) |
 
 ## Implementation Notes
 
@@ -121,12 +129,4 @@ C:\datasets\MinneApple\
 - `max_new_tokens=2000` 필수 — 500 설정 시 ~29개에서 생성 중단 현상 발생
 - 튜닝(tile_size, merge_radius, 프롬프트)은 반드시 **val split**에서만 수행
 - 스크립트 실행은 `-m` 모듈 방식 필수 (`python scripts/xxx.py` 는 import 오류)
-- 중간 중단 시 체크포인트 자동 재사용 (`ckpt_*.jsonl`)
-
-## Citation
-
-If you use this code, please cite:
-
-```
-[작성 예정]
-```
+- 중간 중단 시 체크포인트 자동 재사용 (`outputs/ckpt_*.jsonl`)
