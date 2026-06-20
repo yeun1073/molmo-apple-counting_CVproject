@@ -57,9 +57,9 @@ n(low)=105, n(mid)=214, n(high)=12
 
 1. **H1 지지 (occlusion 강인성)**: High-occlusion 환경에서 zero-shot Tiled Molmo (MAE=13.08)가 fine-tuned YOLOv8n (MAE=20.75)을 능가. Raw Molmo는 ~40개 점 생성 한계(saturation)로 인해 밀집 장면에서 MAE=37.33으로 크게 실패.
 
-2. **H2 부분 지지 (타일링 효과)**: 타일링은 high-occ에서 raw 대비 65% MAE 개선. Low/mid에서는 타일 경계 중복 검출로 오히려 악화. Localization F1은 전체적으로 개선(0.271→0.409).
+2. **H2 부분 지지 (타일링 효과)**: 타일링은 high-occ에서 raw 대비 65% MAE 개선. Low/mid에서는 타일 경계 중복 검출로 오히려 악화. Localization F1은 전체적으로 개선(0.260→0.406).
 
-3. **pred=40 포화 현상**: Raw Molmo는 mid 이미지의 80%, high 이미지의 67%에서 pred=40으로 고착. 타일링이 이 구조적 한계를 해결하는 핵심 메커니즘.
+3. **pred=40 포화 현상**: Raw Molmo는 mid 이미지의 64%, high 이미지의 67%에서 pred=40으로 고착. 타일링이 이 구조적 한계를 해결하는 핵심 메커니즘.
 
 ## Limitations
 
